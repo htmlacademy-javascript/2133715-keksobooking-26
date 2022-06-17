@@ -1,9 +1,10 @@
 const avatars = [];
 const getAvatar = randomNoRepeats(avatars);
-for (let i = 1; i <= 10 ; i++ ) {
-  avatars.push(i < 10 ? (`img/avatars/user0${  i.toString()  }.png`) : `img/avatars/user${  i.toString()  }.png`);
-}
+
 function randomNoRepeats(array) { // случайный не повторяющийся элемент массива
+  for (let i = 1; i <= 10 ; i++ ) {
+    avatars.push(i < 10 ? (`img/avatars/user0${  i.toString()  }.png`) : `img/avatars/user${  i.toString()  }.png`);
+  }
   let copy = array.slice(0);
   return function () {
     if (copy.length < 1) {
@@ -101,11 +102,15 @@ function getLocationY() {
   return getRandomPositiveFloat(35.65000, 35.70000);
 }
 
+const LOCATIONY = getLocationY();
+
 // Генерация адреса по долготе
 function getLocationX() {
   // от 35.65000 до 35.70000
   return getRandomPositiveFloat(139.70000, 139.80000);
 }
+
+const LOCATIONX = getLocationX();
 
 // Функция, возвращающая случайное целое число из переданного диапазона включительно:
 function getRandomPositiveInteger(a, b) {
@@ -151,7 +156,7 @@ const createObject = function () {
     },
     offer: {
       title: getRandomArrayElement(TITLE),
-      address: getLocationY() + ', ' + getLocationX() + '',
+      address:`${LOCATIONY  } ${  LOCATIONX}`,
       price: getRandomArrayElement(PRICE),
       type: getRandomArrayElement(TYPE),
       rooms: getRandomArrayElement(ROOMS),
@@ -163,11 +168,9 @@ const createObject = function () {
       photos: getOfferPhotos()
     },
     location: {
-      lat: getLocationY(),
-      lng: getLocationX(),
+      lat: LOCATIONY,
+      lng: LOCATIONX,
     }
   };
 };
-
-const similarObjects = Array.from({length: SIMILAR_OBJECT_COUNT}, createObject);
-
+Array.from({length: SIMILAR_OBJECT_COUNT}, createObject);
